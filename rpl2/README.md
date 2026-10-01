@@ -18,6 +18,7 @@ section:
 | [`stableswap/`](stableswap/) | Curve's StableSwap invariant for RAND and a pegged token; the invariant `D` is declared by the caller and checked exact, never computed |
 | [`orderbook/`](orderbook/) | escrowed limit orders with partial fills; a ticket secret owns each order; why a taker's payment waits in the cell for the maker |
 | [`stablecoin/`](stablecoin/) | a collateralised-debt-position stablecoin: an operator's price, positions owned by secrets, 150 % to borrow, liquidation below 110 % |
+| [`perp/`](perp/) | a perpetual-futures market: oracle price, an LP pool as every trader's counterparty, 10× leverage, a profit cap and a reserve rule that keep the vault solvent |
 | [`crowdfund/`](crowdfund/) | all-or-nothing crowdfunding: pledges mint receipts, receipts refund, the creator claims once the goal is met |
 
 ## How an invoke works

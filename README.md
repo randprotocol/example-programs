@@ -18,6 +18,7 @@ chain.
 | [`rpl2/stableswap`](rpl2/stableswap/) | a Curve-style StableSwap pool; the invariant is declared and checked, not computed | a Rust guest + `plan` tool |
 | [`rpl2/orderbook`](rpl2/orderbook/) | escrowed limit orders with partial fills and ticket secrets | a Rust guest + `plan` tool |
 | [`rpl2/stablecoin`](rpl2/stablecoin/) | a CDP stablecoin: oracle price, 150 % collateral, liquidation under 110 % | a Rust guest + `plan` tool |
+| [`rpl2/perp`](rpl2/perp/) | a perp DEX: oracle-priced, LP pool as counterparty, 10× leverage, liquidations | a Rust guest + `plan` tool (tier 14) |
 | [`rpl2/crowdfund`](rpl2/crowdfund/) | all-or-nothing crowdfunding with refundable receipt tokens | a Rust guest + `plan` tool |
 
 For a full application on RPL-2, see [durian.market](https://github.com/randprotocol/durian.market),

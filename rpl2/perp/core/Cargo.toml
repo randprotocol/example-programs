@@ -1,0 +1,17 @@
+[package]
+name = "perp-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The perp example's rules: one oracle-priced perpetual market, its LP pool and its positions"
+
+# no_std on the guest, std on a host (the `plan` tool and the tests). The guest's build copies
+# this crate inside it and the kit beside it ($CIRCUITS/example-programs/{perp/core,kit}).
+[dependencies]
+rpl2-kit = { path = "../../kit" }
+
+[[bin]]
+name = "plan"
+path = "src/bin/plan.rs"
+
+[workspace]
