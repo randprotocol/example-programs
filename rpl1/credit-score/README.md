@@ -271,14 +271,15 @@ words and the commitment — tier 10's budget is 1 023 cycles and 128 permutatio
 
 ## On chain
 
-```sh
-./deploy.sh                                   # rand program deploy image.bin --public model.txt → program.id
-./call.sh statements/clean.txt                # draws statements/clean.secret, proves, prints the receipt
-AUDITOR=rand1… ./call.sh statements/clean.txt # the regulator can `rand open-call <tx> --as-auditor`
-rand open-call <tx>                           # the borrower, on any machine with their wallet key
-```
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
-The receipt's `outputs` are the eight words above, `h_in` is the salted commitment to all forty
-private words, and `h_pub` is the digest of `model.txt`. A lender checks three things: the
-`program` is the id they deployed, `outputs[0]` is the band, and the transaction hash is the one
-the applicant sent them.
+program id `9d3197175087c66496a7a0eb22bf208e12d89a691b93a29e74acb2efe5e1ba35`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `9a19ff1e5069eccd0f76ec74ab69311272228925ad996b7e6f9add1bef3e9fb4` |  | 0.0453 | deployed |
+| `call.sh statements/clean.txt` | `b38870ce30647101269256993d5bc9d739d6a4ae3227348aa0f5ef1683458cbe` | 12 | 0.005673037 | outputs [3, 12, 1965549967, 2224320031, 2012936611, 2501592767, 551738090, 292860305] |

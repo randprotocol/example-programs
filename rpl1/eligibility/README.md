@@ -165,3 +165,16 @@ program on chain was deployed with another issuer's root or another cutoff. By d
 and `--no-envelope` keeps even that off chain.
 
 ## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `251f911628e659601f3e68127ab8837572f4364daeb7a08c43cad88820c43b25`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `eaff073788c6fde7fec1830f7c60426c2949510be1d3fda49479b6ac59e81939` |  | 0.046 | deployed |
+| `call.sh credentials.example 0` | `1eb5cf60b49b069f580b5290fca019ddabe8d35f06dd1ac94e2ca091063fb094` | 12 | 0.005932237 | outputs [1, 2008, 717960973, 1268762641, 1496169649, 1648399979, 1053893688, 1041240009] |

@@ -197,3 +197,24 @@ cells); each deposit's and payout's amount and each payout's recipient key. Not 
 position or who provides liquidity: a position is named by a secret's digest, the bundle names
 nobody, and an LP token is a shielded note like any other. Who liquidated whom is not public
 either; that a position was liquidated, and for how much, is.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `bdf8abe3b0ba951b21c8642507f09b1a7fc07cfb17cbaf6596ac00af90797657`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `563cac42df743374d2bd4be47fbaa95dba1112ffcbdb52b636550254d1628a1e` |  | 0.3069 | deployed |
+| `lp-token.sh ` | `b240bd6076ed0013fd6075ef2fdafb0dd50a11df789de4761b363416f85a34cb` |  | 1.001 | token index 10 |
+| `price.sh 1000000000 10` | `477eab4cad5e980b42a5138d78fc1556e815cb2cc853943b6bb61a15ca86e2bc` | 14 | 0.015931225 | outputs [1, 2808348672, 232830643, 0, 0, 0, 0, 0] |
+| `lp-add.sh 10` | `8a8bd3a2f3ede524587efafb74dcbc00658db420a6a57693abc12175b1ba26ea` | 14 | 0.005931225 | outputs [2, 1410065408, 2, 1410065408, 2, 0, 0, 0] |
+| `open.sh p1 long 1 5` | `94c7ed727c7c696763708b4b1e2394cfcf33f1b1bffac8c2b3ffa1ed0d595bbb` | 14 | 0.026449625 | outputs [4, 1000000000, 0, 5, 0, 705032704, 1, 1] |
+| `price.sh 1100000000` | `d2a69c46e1400d97a2ab5569bea3cd8dd312b28c4a989b642f293225fd9d35a0` | 14 | 0.005931225 | outputs [1, 82706432, 256113708, 0, 0, 0, 0, 0] |
+| `close.sh p1` | `e45abf377076d2b852c4ac44569807cb6b1fc96680d265a99f7149b7b7b20cf9` | 14 | 0.006449625 | outputs [5, 1500000000, 0, 1000000000, 0, 705032704, 1, 1] |
+| `lp-remove.sh 1000000000` | `3b555e4acfd8424ea7fc49f123d6668e1cade5f390bd5eb710ac75edd527c18c` | 14 | 0.006449625 | outputs [3, 1000000000, 0, 950000000, 0, 0, 0, 0] |

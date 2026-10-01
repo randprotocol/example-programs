@@ -159,3 +159,21 @@ The oracle's price. For each resting order: its escrow and a commitment — neve
 threshold. For each fire or cancel: the amount released and the recipient's public key, as for
 any payout. Not who placed an order (the bundle names nobody), not what its trigger was, and not
 that anyone ever tried to fire it before its time: a refusal is no transaction.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `7e92e337bd08b21e7fde15b07723f52bb22f485d7e71be4deb7db38f3313aff1`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `5ba712cb0e67cc36327b4b3f4c31839a8748f9c33ccead62225e2c2f196485eb` |  | 0.1071 | deployed |
+| `set-price.sh 100` | `de4507bbb26b742663c575a9681ec82f19cf1ff10003fb50d33b6f4fb940362c` | 12 | 0.015672025 | outputs [1, 100, 0, 0, 0, 0, 0, 0] |
+| `place.sh stop 1 90 s1` | `eacde428d545f3ab3f14ca8603fb04d2d675db6177e9859739513f5af4f42028` | 12 | 0.015672025 | outputs [2, 1000000000, 0, 0, 0, 0, 0, 0] |
+| `set-price.sh 85` | `c30fd8e6a0e95fed2f0c7b16da2c2e03f20cccd1972bd28d7f198e3db4dbecd8` | 12 | 0.005672025 | outputs [1, 85, 0, 0, 0, 0, 0, 0] |
+| `fire.sh s1.secret` | `56f18ebe1574a0a00ae440b660ed68a9653edad7c344368ec03e158677a0c838` | 12 | 0.005672025 | outputs [3, 1000000000, 0, 0, 0, 0, 0, 0] |

@@ -149,3 +149,23 @@ The campaign's cell (what has been raised, the receipt token, whether it is clai
 and the creator's lock (in the program id), and each pledge's, refund's and claim's amount and
 each payout's recipient key. Not who backed the campaign: a pledge names nobody, and its receipts
 are a shielded note like any other.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `e32f8fad39080079abe5f71ae4cf31db1716406843562adfbc12682095cef243`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `c8cd50ed48b5039df45f471fea4056f4ee1907b277884b5bc443c7ca96fdd7d1` |  | 0.0667 | deployed |
+| `receipt-token.sh ` | `ea60d094bb94ccc046a18fb92fb9f7169357a7cac2893163cfe70008b88e73fe` |  | 1.001 | token index 6 |
+| `init.sh 6` | `84eac7f301d4f3b5288e63d99c1f9dc8371b00b2f2bba9895474a9fcaa16dd7c` | 12 | 0.015542425 | outputs [1, 0, 0, 0, 0, 0, 0, 0] |
+| `pledge.sh 2` | `651cc6d484e99c08c98aa5b66374445f9f1c789099e481d767c099c92f9b86d4` | 12 | 0.005542425 | outputs [2, 2000000000, 0, 2000000000, 0, 0, 0, 0] |
+| `pledge.sh 1.5` | `b04060f68eb0b5154cfb691c6b9e13a4d0e93fc58bf474a1cabbd9cd3bacc9ea` | 12 | 0.005542425 | outputs [2, 1500000000, 0, 3500000000, 0, 0, 0, 0] |
+| `refund.sh 500000000` | `9ebf314941405e4de5dd2670a1246092e66165f666ceaad90428509f86b063de` | 12 | 0.005542425 | outputs [3, 500000000, 0, 3000000000, 0, 0, 0, 0] |
+| `claim.sh ` | `1bdce0aedaa6e43ffa901c7e98501725427f089fc844f3f7e9d005d2059e1ba4` | 12 | 0.005542425 | outputs [4, 3000000000, 0, 3000000000, 0, 1, 0, 0] |

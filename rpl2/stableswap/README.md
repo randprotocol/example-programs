@@ -174,3 +174,21 @@ The pool's reserves and supply (its cell), `A`, each deposit's and payout's amou
 payout's recipient key; `D` is a private input, but anyone can recompute it from the cell. Not
 who swapped or who provided liquidity: the bundle names nobody, and a share is a shielded note
 like any other.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `ae18577b74b60651ec0044258cc45d4fdc2c4f03cddce58052496bf68f6b2758`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh 4 100` | `94ea50399cba27498d79887d215ccac7d96a080d886e947d590fa16a08dd6a2e` |  | 0.1599 | deployed |
+| `share-token.sh ` | `2d8b778513afd254a4bd415778a9d9ed261e63b376720fa10f656ec6a90251a1` |  | 1.001 | token index 8 |
+| `add.sh 2 2000000000 8` | `8436f55e40163bd3d98edd7e9a274bd85653149ea322ef28c916bbacbb7be4f5` | 14 | 0.016449625 | outputs [1, 2000000000, 0, 2000000000, 0, 4000000000, 0, 0] |
+| `swap.sh rand 0.5` | `acf6a4156064885924f4aa6a69ab3f02f703b07f4b23664820b7ca8bc15d340e` | 14 | 0.006968025 | outputs [3, 500000000, 0, 499138602, 0, 4000000000, 0, 0] |
+| `remove.sh 500000000` | `fd7b2b5ba8e956e5efb492ebf5c41d2dcb412bc587f42f2e0ae68ded9c32526c` | 12 | 0.005801625 | outputs [2, 312500000, 0, 187607674, 0, 0, 0, 0] |

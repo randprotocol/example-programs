@@ -143,3 +143,21 @@ cell), each deposit's, payout's, mint's and burn's amount, and each payout's and
 key. Not who owns a position: its key is a digest of a secret that never leaves the owner's
 machine, and the bundle names nobody. A liquidation reveals who was paid the collateral (the
 recipient's key), not who owned the position.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `89da2fc34aec789eb7401a83e9862cde1fe76df6852b6fc0c1490139deb415e3`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `d194d020958ba2ef90fe8b207c9163b396c85bf30e31428669f35e79be1177ce` |  | 0.1296 | deployed |
+| `stable-token.sh ` | `09d5dc436e749a2c27799014d6cfcf8fa53e8338c48e990c450efdffcdb3f017` |  | 1.001 | token index 7 |
+| `set-price.sh 2000000000 7` | `6cdeb9240261083cc4ec4265aa3b89b6ebf149ef0b69370c1d6a16748a5f3e51` | 12 | 0.015672025 | outputs [1, 2000000000, 0, 0, 0, 7, 0, 0] |
+| `adjust.sh --deposit 3 --mint 2000000000` | `a071533e9a908986849c8f1e5c6389bab1e297498aaed5aeef67b28277da24a0` | 12 | 0.015931225 | outputs [2, 3000000000, 0, 2000000000, 0, 0, 0, 0] |
+| `adjust.sh --repay all --withdraw max` | `f9f735c266eaa584424a0c17b24dbdfc6be1801f5098b46d7820e1159cc999cf` | 12 | 0.005931225 | outputs [2, 0, 0, 0, 0, 0, 0, 0] |

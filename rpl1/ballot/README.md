@@ -218,10 +218,15 @@ the roll: it moves the trust from the tallier to the auditor, it does not remove
 
 ## On chain
 
-```sh
-./deploy.sh                               # rand program deploy image.bin --public vote.txt
-./call.sh roll.txt ballots.txt            # rand call <id> --expect-public vote.txt --input … (one per word)
-```
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
-The deploy pays for the 228 code words and the 9 public words; the receipt carries the program id,
-the eight totals words, the tier and `H_IN`, and `rand receipt <tx>` prints it again later.
+program id `c73448baf6ae3ab4f034d159cc542c1010f0ef2be858a9d88e8c0eca24793f80`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `2ea81ea1c2654c9ea21238dd8835dcbaa9574e2e4b58180c9aaaadbfe1be6964` |  | 0.0247 | deployed |
+| `call.sh roll.txt ballots.txt` | `d9d9455ea7cef92e59365cec7608467e7bc409f4e3dd7f5f910e73ada33ccde3` | 10 | 0.005511037 | outputs [700, 0, 300, 0, 0, 0, 0, 0] |

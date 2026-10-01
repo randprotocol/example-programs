@@ -98,3 +98,23 @@ is a shielded note like any other.
 [durian.market](https://github.com/randprotocol/durian.market) is the full application: any number
 of pools in one program, token-to-token swaps routed through RAND, a web front end. This example
 is the same rules for a single pair, small enough to read in one sitting.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `032670a7febd9e8e78594a0706da44e7a9e72a993c045f750523871fab3f2a5b`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `rand token create --fixed-supply 1000000000000 …` (EXT, the traded token) | `d0fccfeab80cfb457000b82c22e391c8ddc4c8053adb3e1a4bebda2e6dd1771c` |  | 1.001 | token index 4 |
+| `deploy.sh 4` | `ce504c8822d467c04c7fca79884b2d6a9c81d3def05c7cbcfd431e7b6feb5174` |  | 0.1281 | deployed |
+| `share-token.sh ` | `1a1461680d52c9724d72d1fb9ae90493b26fc533fbfd63f0904c4db6b0d97d1b` |  | 1.001 | token index 5 |
+| `add.sh 5 20000000000 5` | `c38f4999a6e0067168921772987b119a829008d8f37398f9135d0b87f5c44499` | 12 | 0.015672025 | outputs [1, 705032704, 1, 2820130816, 4, 0, 0, 0] |
+| `swap.sh rand 1` | `82724e17892a2ba4602836f0a9895b094ecb6e4744bc1e77b9999a7c1b1857de` | 12 | 0.005931225 | outputs [3, 1000000000, 0, 3324995831, 0, 0, 0, 0] |
+| `swap.sh token 3000000000` | `bf26c541466f6b7f3092721f2f05babd2349ced5ba31df99b8001cbc866f243c` | 12 | 0.005931225 | outputs [3, 3000000000, 0, 912539214, 0, 0, 0, 0] |
+| `remove.sh 1000000000` | `b577c8fb5df8f781c55627c5af95c11d26bba7fb7318490a629330f85ddb050f` | 12 | 0.005801625 | outputs [2, 508746078, 0, 1967500416, 0, 0, 0, 0] |

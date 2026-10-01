@@ -179,3 +179,24 @@ All of the following is public:
 Who lent, who borrowed and who liquidated is not public: the bundle names nobody, and a share is
 a shielded note like any other. A position is linked to nothing but its secret. Every adjustment
 of the same position is visibly the same key.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `95ab870c8ba5531466443faaa6d052445157e54142dec8935435d199847b34a3`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `7cc327096a38d858ca7e1cf3a3e3e8ab49ab65d9de5ec6cc8f55c9149be987da` |  | 0.2699 | deployed |
+| `share-token.sh ` | `c2c91e5013ca28bffb03b95d3b31a84701f5002f186696e4b1500845a84b5666` |  | 1.001 | token index 9 |
+| `operate.sh init 1000000000 9` | `cbac9aa8ad0db411021a58caee31e4ede97ad8aa7c9a836af742a1386e544244` | 14 | 0.035931225 | outputs [1, 2808348672, 232830643, 1000000000, 0, 0, 0, 0] |
+| `supply.sh 5` | `a4163504aabfcdb6778566bab3f2fd708bc8c858072d8c03871131a24732329f` | 14 | 0.005931225 | outputs [2, 705032704, 1, 705031704, 1, 0, 0, 0] |
+| `adjust.sh --deposit 4000000000 --borrow 2000000000` | `d0815298aa6d11bcd4de5d93faebd8b1100ca9c0d530c361bb705a4d4f5ae61b` | 14 | 0.016449625 | outputs [4, 4000000000, 0, 2000000000, 0, 0, 0, 0] |
+| `operate.sh update 1000000000 10000000` | `d760b5ff40af7744b627fa7a32ef40a50f889b403d82bf4f78fdc342a931aab5` | 14 | 0.005931225 | outputs [1, 2808348672, 232830643, 1010000000, 0, 0, 0, 0] |
+| `adjust.sh --repay all` | `5d7cbd20cbc2f89580485e3dd42444c84291859c76bf807ccee231aa31187a08` | 14 | 0.006449625 | outputs [4, 4000000000, 0, 0, 0, 0, 0, 0] |
+| `withdraw.sh 1000000000` | `f795abc3f5a4bf63c9c99255e700b8812e55c5deff82b7732160ca96e1e322d6` | 14 | 0.006449625 | outputs [3, 1000000000, 0, 1004000000, 0, 0, 0, 0] |

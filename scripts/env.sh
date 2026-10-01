@@ -1,7 +1,7 @@
 # Sourced by every example's scripts. Override any of these in your environment.
 #
 #   RAND        the `rand` wallet CLI (fullnode v0.6.8 or later for RPL-2)
-#   RAND_RPC    the node; default the durian devnet's public wallet endpoint (chain 1919)
+#   RAND_RPC    the node; default the public testnet (chain 20) RPC
 #   RAND_KEY    the wallet's spend-key file; its notes live beside it in <key>.notes.json
 #   CIRCUITS    a checkout of the circuits repo (guest-sdk, rand-guest, sbpf2rv)
 #   TOOLCHAIN   the pinned Rust toolchain guests build with
@@ -9,7 +9,7 @@
 # Example: RAND_RPC=http://127.0.0.1:8545 RAND_KEY=~/rand/wallet.key.json ./deploy.sh
 
 : "${RAND:=rand}"
-: "${RAND_RPC:=https://durian.market/api/wallet-rpc}"
+: "${RAND_RPC:=https://rpc.randprotocol.org}"
 : "${RAND_KEY:=$HOME/.rand/wallet.key.json}"
 : "${CIRCUITS:=$HOME/circuits}"
 : "${TOOLCHAIN:=1.98.1}"

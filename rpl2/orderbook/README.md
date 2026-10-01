@@ -155,3 +155,20 @@ recipient key, as for any program payout.
 Not public: who posted an order or who filled it, because the bundle names nobody and the ticket
 never leaves the maker's machine. Only its digest appears, as the key. A maker's post and close
 can be linked to each other through the order key, but not to a wallet.
+
+## On chain
+
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
+
+program id `aaafb7a12afc59f90edaef5479c03e01e1e8d9914689da90f53af49dbd694b21`
+
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `11c3bd0a5f0b3531aea75eab8a93cc81eff1917a68afe706562d3a3e703dab81` |  | 0.1119 | deployed |
+| `post.sh 0 2000000000 4 4000000000 o1` | `4d37ea35b6d9d3a717156291df3dc031980f8fc2dbdd3395c1c8798d4303656c` | 12 | 0.015542425 | outputs [1, 2000000000, 0, 4000000000, 0, 0, 0, 0] |
+| `fill.sh 010000003fd268052c5d4b4f1ff4bc907e216b68031169886e0b3c807141fa98 2000000000` | `f551e8befaf8f0d41c0a174e218a1f8ea2fa9760b9cb1dd647c55b16b9b991f9` | 12 | 0.005672025 | outputs [2, 1000000000, 0, 2000000000, 0, 0, 0, 0] |
+| `close.sh o1.secret` | `4516348d8c2cbb1a084af962e91083aa4d2e35e64aa6dd95364cdca73885e551` | 12 | 0.005542425 | outputs [3, 1000000000, 0, 2000000000, 0, 0, 0, 0] |

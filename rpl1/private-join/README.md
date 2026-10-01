@@ -170,23 +170,15 @@ commitments differ from run to run because `run.sh` draws fresh salts; the outpu
 
 ## On chain
 
-Between institutions A and B, with B running the join:
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
-```sh
-# A, on its own machine: commit, and send the printed eight words to B.
-./commit.sh records-a.txt                 # writes records-a.secret, prints C_A
+program id `b5dfff7843bc682cb2f9c143f33fe9fae8756471444ac4b8c44c1687ab32cb23`
 
-# B: commit its own list, agree on the mode, deploy.
-./commit.sh records-b.txt                 # writes records-b.secret, prints C_B
-./public.sh "<C_A>" "<C_B>" 0             # join.txt: both commitments, mode 0 (intersection size)
-./deploy.sh                               # program id = hash of the code and join.txt
-
-# A sends B its list and salt (B will see them — see the trust model). B proves:
-./call.sh records-a.txt records-a.secret records-b.txt records-b.secret
-```
-
-`call.sh` passes `--expect-public join.txt`, so the wallet refuses before proving if the program on
-chain was deployed with other commitments or another mode. A checks the receipt the same way: the
-program id must be the one `rand program deploy` printed for this code and this `join.txt` (A can
-recompute it, or `rand program show <id>` and compare the public words), and `out[0]` is the
-result. Nothing else about either list reaches the chain.
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `a87df1dcd6c48019b8512078ce331f009d90cda7aa02e673b38eb8a688da6209` |  | 0.039 | deployed |
+| `call.sh lists/a.txt lists/a.secret lists/b.txt lists/b.secret` | `12beb8c3384fc36f63fe5ff2577831d73819e8e9613f8f0bcaf0a56a05184f4a` | 12 | 0.005932237 | outputs [3, 0, 0, 0, 0, 0, 0, 0] |

@@ -183,18 +183,15 @@ line above it is the smallest tier the run fits, and the wallet proves at that o
 
 ## On chain
 
-`deploy.sh` deploys with `mode.txt` as the public input; `rand-program-2` hashes the code and the
-mode into the program id, so an auction and an RFQ have different ids. `call.sh` passes
-`--expect-public mode.txt`, so the wallet refuses before proving if the program on chain was
-deployed with the other mode.
+Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
+`https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
+a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
-`call.sh round1.secret` prints the commitment list and the expected receipt, then proves the call
-and prints the receipt the chain recorded; its `outputs` are the eight words above. Publish the
-list with the receipt's transaction id. By default `rand call` also seals the call's inputs — the
-bids — in an envelope only the calling wallet's key opens; `--no-envelope` keeps even that off
-chain.
+program id `72b753e655aca25bafecbcd632f9808b22a913288480c7353098471bbbca3d56`
 
-For a bidder, `verify.sh 7 500 1234567890123` prints
-`75f046028c494840a41af9f00a48430aa4eba91444aa00c576c8aa387d0490e1`, the first line of the list.
-For anyone, `verify.sh --fold published.txt` prints `receipt out[3..8] must be: 2924312494 …`, and
-`rand_getReceipt` (or the receipt `call.sh` printed) shows those words.
+| step | transaction | tier | fee (RAND) | result |
+|---|---|---|---|---|
+| `deploy.sh ` | `a72e2c3849f867ccf68397c1581a7bf0a23d3f516327b03d363f5ac5dd888312` |  | 0.0319 | deployed |
+| `call.sh demo-bids.txt` | `d6afbeb2163456d8da1826add29e367cbafc4c71f33cfaf4b91cff03a319f0a2` | 10 | 0.00557571 | outputs [8, 700, 0, 2924312494, 3347677334, 3360650506, 2056117393, 3726953813] |

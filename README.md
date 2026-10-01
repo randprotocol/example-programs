@@ -59,10 +59,10 @@ matches. The program never computes anything the caller can't see; it checks.
 | | |
 |---|---|
 | `rand` | the wallet CLI from [fullnode](https://github.com/randprotocol/fullnode), **v0.6.8 or later** (RPL-2). `cargo build --release -p randprotocol-client` → `target/release/rand` |
-| a node | a chain with the `program_state` genesis section for RPL-2. The public durian devnet (chain 1919) is the default: `https://durian.market/api/wallet-rpc`, with a faucet |
-| a wallet | `rand --key ~/.rand/wallet.key.json keygen`, then `rand --key … faucet` on a test chain |
+| a node | a chain with the `program_state` genesis section for RPL-2. The public testnet, **chain 20**, is the default: `https://rpc.randprotocol.org` (its front must pass the RPL-2 read methods, which it does since randprotocol.org `e77ec7a`) |
+| a wallet | `rand --key ~/.rand/wallet.key.json keygen`. Chain 20's faucet mints only to its genesis wallets, so `rand faucet` is refused there (`rand_mint` is not public): ask the operators for test RAND — about 30 RAND runs every example here once |
 | to build guests | a checkout of the circuits repo (`guest-sdk`, `rand-guest`, `sbpf2rv`), Rust **1.98.1** with `riscv32im-unknown-none-elf` and `llvm-tools`; clang **23.1.1** for the SPL example |
-| to prove | about 6 GB of free memory; a bundle proof takes 1–4 minutes on a CPU |
+| to prove | about 6 GB of free memory. With a `main`-branch `rand` a tier-14 bundle proof takes ~20 s and a tier-12 call ~6 s on one core of an M4 laptop (the pre-rebase `feat/rpl2` build is 5–6× slower); an RPL-2 invoke, three proofs, lands in under a minute |
 
 ```sh
 rustup toolchain install 1.98.1
@@ -76,15 +76,34 @@ environment:
 | variable | default |
 |---|---|
 | `RAND` | `rand` (on `PATH`) |
-| `RAND_RPC` | `https://durian.market/api/wallet-rpc` |
+| `RAND_RPC` | `https://rpc.randprotocol.org` (chain 20) |
 | `RAND_KEY` | `~/.rand/wallet.key.json` |
 | `CIRCUITS` | `~/circuits` |
 
 ```sh
 export CIRCUITS=~/src/circuits RAND_KEY=~/.rand/wallet.key.json
-rand --key "$RAND_KEY" keygen && rand --key "$RAND_KEY" faucet --rpc "$RAND_RPC"
+rand --key "$RAND_KEY" keygen            # then get test RAND for its address (see above)
 cd rpl2/counter && ./build.sh && ./run.sh && ./deploy.sh && ./invoke.sh && ./state.sh
 ```
+
+## Everything here has run on chain 20
+
+On 2026-10-01 every example in this repository was deployed and used on chain 20, the public
+testnet, through `https://rpc.randprotocol.org`, by its own scripts — 17 programs, 7 program-minted
+RPL tokens, 10 calls and 38 invokes, every receipt equal to what `run.sh` predicted on the emulator.
+Each README's **On chain** section has the program id and every transaction. The same flows ran
+unchanged on a local chain cut with the same genesis flags; the RPL-2 vaults ended at identical
+values on both.
+
+What running it on chain found, and where it was fixed:
+
+| what | where |
+|---|---|
+| the chain-20 public RPC front refused `rand_getProgramCell`/`Cells`/`Vault`, so no RPL-2 program could be driven from the published endpoint (`rand program invoke` checks every declared read first) | randprotocol.org `e77ec7a`: its allowlist now mirrors the node's `PUBLIC_METHODS` |
+| durian.market's wallet proxy refused `rand_getRawTransaction`, which every scan needs after a faucet mint, so no external wallet could sync | durian.market `887252d` |
+| a `main`-built wallet refuses chain 1919 (BIND-1: no `binding_domain` in that genesis); chains from 20 on carry one | moot: the devnet is retired for chain 20 |
+| `rand_status` says `faucet: true` on chain 20 but `rand_mint` is not public and the faucet mints only to genesis wallets | docs: how a chain-20 user gets test RAND |
+| proving runs on one core; the `feat/rpl2` build proves 5–6× slower than `main` | run the `main` / v0.6.8 build; multi-core proving is the open item |
 
 ## Two rules every program here keeps
 
