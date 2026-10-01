@@ -1,0 +1,8 @@
+target/
+# Per-user, per-deploy state: never commit.
+program.id
+secret.txt
+lock.txt
+*.key.json
+*.notes.json
+authority.key.json

@@ -1,0 +1,19 @@
+[package]
+name = "lock-hash"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Computes the vault's lock off chain (never deployed)"
+
+# Built by ../build.sh beside the vault, inside a circuits checkout
+# ($CIRCUITS/example-programs/vault/lock-hash), three directories below guest-sdk.
+[dependencies]
+guest-sdk = { path = "../../../guest-sdk" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

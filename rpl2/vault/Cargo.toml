@@ -1,0 +1,19 @@
+[package]
+name = "vault"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-2 example: a vault anyone pays into and only a secret's holder pays out of"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/vault), where
+# guest-sdk sits two directories up.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

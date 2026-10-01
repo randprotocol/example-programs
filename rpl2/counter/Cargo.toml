@@ -1,0 +1,19 @@
+[package]
+name = "counter"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-2 example: a counter in one program cell"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/counter), where
+# guest-sdk sits two directories up.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
