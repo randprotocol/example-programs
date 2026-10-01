@@ -21,7 +21,7 @@ guard, so the program id binds this exact ELF.
 |---|---|
 | `build.sh [program.so]` | translate and build (default: SPL Token from your circuits checkout); writes `image.bin` and copies the ELF to `program.so` |
 | `run.sh` | execute Transfer, MintTo, Burn and the refused cases off chain, translated image vs the interpreter (`sbpf2rv`'s parity test) |
-| `deploy.sh` | deploy `image.bin` with `program.so` as the public input |
+| `deploy.sh` | deploy `image.bin` with `program.so` as the public input (refused by v0.6.8 nodes — see "Deploy") |
 | `call.sh <words file>` | call it — see "Calling it" below |
 | `image.bin`, `program.so` | committed, so `deploy.sh` needs no toolchain |
 
@@ -64,8 +64,19 @@ and demands identical outputs:
 
 ## Deploy
 
-The chain must allow programs of 65 096 words with 27 151 public words — the durian devnet and
-chains 13 onward do. The fee counts both: `0.001 + 0.0001 × (65 096 + 27 151)` = **9.2257 RAND**.
+**A v0.6.8 node refuses this deploy.** Since v0.6.8 a node checks at deploy time that a program
+can ever be called, and this one cannot: a call proves at tier 14 at most, and every SPL Token
+instruction needs about tier 20. On chain 20 (2026-10-01):
+
+```
+a program of 65096 words (public input 27151 words) can never be called: a call proves at most
+0 program words beside that public input at the highest tier a call may use — split the program
+```
+
+So on chain 20 and later this example is **off chain only**: `build.sh` and `run.sh` work,
+`deploy.sh` is refused. Older chains accepted it — chain 13 and the pre-rebase durian devnet,
+whose limits allow 65 096 words with 27 151 public words; there the fee counts both:
+`0.001 + 0.0001 × (65 096 + 27 151)` = **9.2257 RAND**.
 
 ```sh
 ./deploy.sh
@@ -78,8 +89,9 @@ The same image was deployed on chain 13 as program
 
 Not yet possible on any machine we have. Each SPL Token instruction runs about 700 000 zkVM
 cycles, which is tier 20, and a tier-20 call proof needs about 330 GB of memory. The program is
-on chain and its execution is checked off chain (`run.sh`); proving a call waits on a smaller
-prover footprint or a bigger machine. `call.sh` is the command it will be: it takes the
+on chain 13 and its execution is checked off chain (`run.sh`); on v0.6.8 chains the deploy itself is
+refused for the same reason (see "Deploy"). Calling it waits on splitting the program or a higher
+call tier. `call.sh` is the command it will be: it takes the
 instruction's ~10 000 words (the serialized accounts and data, as `sbpf2rv`'s
 `SbpfCall::input_words()` builds them) and checks the chain's copy of the ELF before proving.
 

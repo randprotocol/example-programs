@@ -78,6 +78,19 @@ The image is 305 words with the Poseidon2 call inside (`lock-hash` is 199); both
 
 ## On chain
 
+### Chain 20, the Rand testnet
+
+Run 2026-10-01 through `https://rpc.randprotocol.org` with a v0.6.8 (`main`) `rand` and these
+scripts, unmodified (its own `lock.sh`, so its own lock and program id):
+
+| | |
+|---|---|
+| program id (this lock) | `6c712e92cb75c7ccc14b4940f48c086d965431dcca9d5fed30786f528541f3e0`, 305 words |
+| deploy | `e239d209d067c7e5d6daa8b91b6d46f3f8a817e11751fe75f1dfd32c8e22c2f8`, fee 0.0323 RAND |
+| `./deposit.sh 5` | `91096d7ef50ae850073d38075109b6b2d74326dc993b7a42553c8f8921d9d2e1`, tier 10 |
+| `./withdraw.sh 2` | `efd1a8d43c6d9cad9060a64185e1c067e14a975685c8f056fb66af19afc4eca8`, tier 10 |
+
+
 The images `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
 for byte with the pinned toolchain):
 
@@ -91,8 +104,9 @@ The deployed id also binds the lock, so every `lock.sh` gives a different progra
 run below is one of them.
 
 
-Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01, from a
-wallet holding 99.93 RAND:
+### Earlier, on the durian devnet (chain 1919, retired 2026-10-01)
+
+From a wallet holding 99.93 RAND (the pre-rebase `feat/rpl2` build):
 
 ```
 $ ./deploy.sh

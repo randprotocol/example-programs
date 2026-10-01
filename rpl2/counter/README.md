@@ -78,6 +78,22 @@ The first invoke **creates** the cell, so it pays the chain's `cell_fee` on top 
 
 ## On chain
 
+### Chain 20, the Rand testnet
+
+Run 2026-10-01 through `https://rpc.randprotocol.org` with a v0.6.8 (`main`) `rand` and these
+scripts, unmodified:
+
+| | |
+|---|---|
+| program id | `b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec` |
+| deploy | `a993459bbf66bf5cd34368df1d2eacb223d4ae9215f5c4ccb0608f9b0d79b586`, fee 0.0113 RAND |
+| `./invoke.sh` (0 → 1) | `433b0dc28b6ea8bd2da2f35e2efc50745deef8fb011fea17132addcddfb3335c`, fee 0.015477625 RAND (the 0.01 cell fee included: it created the cell) |
+| `./invoke.sh` (1 → 2) | `b691e19114d6a971e976362484f22d55a14d1acf9843db30f216315f1aa987a1`, fee 0.005477625 RAND (a rewrite: no cell fee) |
+
+Both invokes prove at tier 10. The counter on chain 20 is public and shared: `echo
+b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec > program.id` and `./invoke.sh`.
+
+
 The image `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
 for byte with the pinned toolchain):
 
@@ -87,12 +103,12 @@ for byte with the pinned toolchain):
 | `hc` (`rand-guest`) | `abf12528c2e7d8b4f98df55f448a11f3fa8c8646d38e37640bafaf97c8ace481` |
 | program id (no public input, so the deployed id is the same) | `b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec` |
 
-Anyone who builds this source gets **the same program id**. On the durian devnet it is already
+Anyone who builds this source gets **the same program id**. On chain 20 it is already
 deployed, so you can skip `deploy.sh` there: `echo b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec > program.id`
 and run `./invoke.sh` — it increments the same public counter everyone shares.
 
 
-Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01:
+### Earlier, on the durian devnet (chain 1919, retired 2026-10-01)
 
 ```
 $ ./deploy.sh

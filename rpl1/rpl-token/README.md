@@ -51,8 +51,23 @@ The full standard, with the ERC-20 and SPL comparison, is `docs/tokens.md` in
 
 ## On chain
 
-Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01, from a
-faucet wallet:
+### Chain 20, the Rand testnet
+
+Run 2026-10-01 through `https://rpc.randprotocol.org` with a v0.6.8 (`main`) `rand` and these
+scripts, unmodified. Each registration cost 1.001 RAND (the registry's 1 RAND fee and the bundle).
+
+| | |
+|---|---|
+| `./create-fixed.sh … EXF` | token **11**, `be64bd8f4f4690a1bf251ed9172f30f49c4dd867aeb2714be38b0630d67b3663` |
+| `./create-mintable.sh … EXM 100` | token **12**, `5f1e1458a33a0b36a19ba04d8a6721d1612bec036cd1090da3d9ea15324627d0` |
+| `./mint.sh 12 50` | `07ec339b1a8085d94f59ce07230fbc85ae7d40ff3030a19f0bf10e37ef52c055` |
+| `./send.sh 11 … 10` (private) | `bb3f85ac9222b69b64be79893a95e7bf76b99dd25db7ad21ea9581ff37c4104a`, fee 0.001 RAND |
+| `./burn.sh … 5` | `3bdefa75f236ba44d66a3a6b8ddfadd94c17376f6c462e50494186ad8ec2ea2e` |
+
+
+### Earlier, on the durian devnet (chain 1919, retired 2026-10-01)
+
+From a faucet wallet (the pre-rebase `feat/rpl2` build):
 
 ```
 $ ./create-mintable.sh "Example Coin" XMPL 6 1000

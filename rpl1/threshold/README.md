@@ -63,6 +63,20 @@ redeploying gives a new program.
 
 ## On chain
 
+### Chain 20, the Rand testnet
+
+Run 2026-10-01 through `https://rpc.randprotocol.org` with a v0.6.8 (`main`) `rand` and these
+scripts, unmodified:
+
+| | |
+|---|---|
+| program id (deployed with `1000 0`) | `71f6c2e0d1772cdcfeba767ceca2939761d7feda0b7bed96dc366096a5aaa541` |
+| deploy | `fee259de43b482b1396eb8cf8791adef7f10d3fc5dd306ab3e9cabf59e9245b1`, fee 0.0063 RAND |
+| `./call.sh 2500` | `1cd6237db84a688e1f1213567b299b58c1e607362eea9a714ef2f2fb8102bcac`, outputs `[1, 1000, 0, 0, 0, 0, 0, 0]`, tier 10 |
+
+The program id is the same on every chain: it is a hash of the code and the threshold.
+
+
 The image `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
 for byte with the pinned toolchain):
 
@@ -74,8 +88,9 @@ for byte with the pinned toolchain):
 | program id deployed with `threshold.txt` = `1000 0` | `71f6c2e0d1772cdcfeba767ceca2939761d7feda0b7bed96dc366096a5aaa541` |
 
 
-Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01, from a
-fresh faucet wallet, with the scripts above:
+### Earlier, on the durian devnet (chain 1919, retired 2026-10-01)
+
+From a fresh faucet wallet, with the scripts above (the pre-rebase `feat/rpl2` build):
 
 ```
 $ ./deploy.sh
@@ -95,4 +110,5 @@ submitted call 3ef1d975b4cb87967892c18768983bad9e5f7c78bddd1e38bd9e71c83f7160e4
 ```
 
 The call proof (tier 10) took 26 s; most of the wall time is the bundle that pays the fee
-(tier 14, ~6 minutes on a 4-vCPU cloud machine, single-threaded).
+(tier 14: ~6 minutes on that 4-vCPU cloud machine with the pre-rebase build; the v0.6.8 build
+proves it in about 20 seconds on an M4 laptop).
