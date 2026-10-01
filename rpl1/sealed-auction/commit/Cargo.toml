@@ -1,0 +1,20 @@
+[package]
+name = "commit"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Computes the sealed-auction's commitments and fold off chain (never deployed)"
+
+# Built by ../build.sh beside the program, inside a circuits checkout
+# ($CIRCUITS/example-programs/sealed-auction/commit), three directories below guest-sdk.
+[dependencies]
+guest-sdk = { path = "../../../guest-sdk" }
+sealed-auction-core = { path = "../core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

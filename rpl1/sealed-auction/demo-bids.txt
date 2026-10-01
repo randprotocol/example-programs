@@ -1,0 +1,7 @@
+# The demo's bids: one per line, `tag bid salt`. The tag is the number the auctioneer gave the
+# bidder when bidding opened; the salt is a random u64 the bidder chose and keeps. Real bids go in
+# a *.secret file (gitignored), never here.
+7    500   1234567890123
+8    900   9876543210987
+9    700   5555555555555
+10   100   4242424242424

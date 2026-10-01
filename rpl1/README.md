@@ -7,6 +7,7 @@ Everything here runs on any Rand chain (no `program_state` section needed).
 | [`threshold/`](threshold/) | a Rust guest; a deploy-time **public input**; **private inputs** that never leave the prover; a call whose receipt proves a fact without revealing the data; refusing by having no proof |
 | [`spl-token/`](spl-token/) | a **Solana program** (the SPL Token ELF) translated to RISC-V by `sbpf2rv`, run against the sBPF interpreter for parity, and deployed with the ELF as its public input |
 | [`eligibility/`](eligibility/) | prove a predicate (born on or before a cutoff) about a credential in an issuer's Poseidon2 Merkle tree, revealing neither the credential nor which one; the use-case page's "prove eligibility without surrendering identity" |
+| [`sealed-auction/`](sealed-auction/) | a sealed-bid second-price auction (or, flipped, a sealed request-for-quote): bids are private inputs, the receipt is the winner, the clearing price and a fold of every bid's commitment, so no bid can be dropped or misreported |
 | [`ballot/`](ballot/) | a private ballot with a public tally: ballots are private inputs, the roll is a committed digest in the public input, the receipt is the weighted totals; the use-case page's "governance without a bribe market", with what this version does and does not deliver |
 | [`rpl-token/`](rpl-token/) | an **RPL token**: fixed supply or mintable by a post-quantum key; private transfers; burning |
 

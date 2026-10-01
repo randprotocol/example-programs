@@ -1,0 +1,22 @@
+[package]
+name = "sealed-auction"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-1 example: a sealed-bid second-price auction (or lowest-wins request for quote) cleared in a proof"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/sealed-auction), where
+# guest-sdk sits two directories up. The rules are in core/ (also built and tested on the host);
+# commit/ is the off-chain helper guest.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+sealed-auction-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core", "commit"]

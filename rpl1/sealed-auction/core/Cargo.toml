@@ -1,0 +1,16 @@
+[package]
+name = "sealed-auction-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The sealed-auction example's rules: commit, fold, clear"
+
+# no_std on the guest, std on a host (the `auction` tool and the tests). No dependencies. The
+# guest's build copies this crate inside it ($CIRCUITS/example-programs/sealed-auction/core).
+[dependencies]
+
+[[bin]]
+name = "auction"
+path = "src/bin/auction.rs"
+
+[workspace]
