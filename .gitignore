@@ -15,3 +15,8 @@ Cargo.lock
 # Build outputs of the RPL-2 examples (./build.sh makes them).
 rpl2/**/image.bin
 rpl2/**/image.bin.sha256
+rpl1/**/image.bin
+rpl1/**/image.bin.sha256
+# …except the SPL Token translation, which is committed as the artifact it documents.
+!rpl1/spl-token/image.bin
+!rpl1/spl-token/image.bin.sha256

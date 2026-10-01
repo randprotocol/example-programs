@@ -1,0 +1,16 @@
+[package]
+name = "eligibility-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The eligibility example's rules: a credential in an issuer's Poseidon2 Merkle tree meets a cutoff"
+
+# no_std on the guest, std on a host (the `issuer` tool and the tests). No dependencies. The
+# guest's build copies this crate inside it ($CIRCUITS/example-programs/eligibility/core).
+[dependencies]
+
+[[bin]]
+name = "issuer"
+path = "src/bin/issuer.rs"
+
+[workspace]

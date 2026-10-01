@@ -1,0 +1,22 @@
+[package]
+name = "eligibility"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-1 example: prove a predicate about a credential in an issuer's Merkle tree, without saying which"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/eligibility), where
+# guest-sdk sits two directories up. `core/` (the rules) and `hash/` (the off-chain hasher) are
+# copied in with it.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+eligibility-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core", "hash"]
