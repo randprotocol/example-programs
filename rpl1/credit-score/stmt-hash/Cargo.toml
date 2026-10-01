@@ -1,0 +1,20 @@
+[package]
+name = "stmt-hash"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Computes a statements file's commitment off chain, with the credit-score guest's code (never deployed)"
+
+# Built by ../build.sh beside the guest, inside a circuits checkout
+# ($CIRCUITS/example-programs/credit-score/stmt-hash), three directories below guest-sdk.
+[dependencies]
+guest-sdk = { path = "../../../guest-sdk" }
+credit-score-core = { path = "../core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

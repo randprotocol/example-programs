@@ -1,0 +1,14 @@
+# income  payment  end balance. Stretched: DTI 3500 bps and an average balance of 746 — both gates
+# pass, neither prime point → band 1.
+3000 1050 600
+3000 1050 650
+3000 1050 700
+3000 1050 620
+3000 1050 680
+3000 1050 750
+3000 1050 800
+3000 1050 720
+3000 1050 760
+3000 1050 830
+3000 1050 900
+3000 1050 950

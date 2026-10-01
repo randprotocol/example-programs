@@ -1,0 +1,14 @@
+# income  payment  end balance. One month with no income (July), rent still paid: 11 of 12 months
+# covered, DTI 3272 bps (under the 4000 cap, over the 2000 prime), average balance 4058 → band 2.
+4000 1200 4000
+4000 1200 4100
+4000 1200 4300
+4000 1200 4200
+4000 1200 4400
+4000 1200 4500
+0    1200 3300
+4000 1200 3500
+4000 1200 3800
+4000 1200 4000
+4000 1200 4200
+4000 1200 4400

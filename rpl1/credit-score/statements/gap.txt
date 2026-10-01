@@ -1,0 +1,14 @@
+# income  payment  end balance. A three-month gap with no income: the year's DTI is 2666 bps, well
+# under the cap, and the balances are fine, but 9 of 12 months covered is under the model's 10 → band 0.
+5000 1000 6000
+5000 1000 6200
+5000 1000 6400
+0    1000 5300
+0    1000 4200
+0    1000 3100
+5000 1000 7000
+5000 1000 7200
+5000 1000 7500
+5000 1000 7800
+5000 1000 8000
+5000 1000 8300

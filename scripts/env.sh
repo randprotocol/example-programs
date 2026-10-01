@@ -43,7 +43,7 @@ need_rand_guest() {
 # `rand-guest build` only builds a guest that sits inside a circuits checkout (it finds
 # guest-sdk/ above the guest directory), so this copies the crate to
 # $CIRCUITS/example-programs/<name>/ and builds there, then refuses an image that links the
-# panic machinery — guest-sdk's panic handler halts, and a halted run is a provable run, so a
+# panic machinery (no secrets or per-deploy state are copied) — guest-sdk's panic handler halts, and a halted run is a provable run, so a
 # program whose refusal can panic would accept what it means to refuse. The image comes back as
 # <crate dir>/image.bin (+ .sha256).
 build_guest() {
@@ -57,12 +57,12 @@ build_guest() {
     [ -n "$name" ] && [ "$name" != / ] || die "build_guest: no crate name in $src"
     dst="$CIRCUITS/example-programs/$name"
     mkdir -p "$dst"
-    rsync -a --delete --exclude target --exclude 'image.bin*' "$src/" "$dst/"
+    rsync -a --delete --exclude target --exclude 'image.bin*' --exclude '*.secret' --exclude secret.txt --exclude program.id "$src/" "$dst/"
     for extra in "$@"; do
         extra="$(cd "$extra" 2>/dev/null && pwd)" || die "build_guest: no such directory: $extra"
         [ "$extra" != / ] && [ -f "$extra/Cargo.toml" ] || die "build_guest: not a crate: $extra"
         mkdir -p "$CIRCUITS/example-programs/$(basename "$extra")"
-        rsync -a --delete --exclude target "$extra/" "$CIRCUITS/example-programs/$(basename "$extra")/"
+        rsync -a --delete --exclude target --exclude '*.secret' "$extra/" "$CIRCUITS/example-programs/$(basename "$extra")/"
     done
     "$RG" build "$dst"
     elf="$(find "$dst/target/riscv32im-unknown-none-elf/release" -maxdepth 1 -type f -perm -u+x | head -1)"

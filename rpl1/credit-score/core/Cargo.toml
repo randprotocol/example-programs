@@ -1,0 +1,16 @@
+[package]
+name = "credit-score-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The credit-score example's rules: a lender's model over twelve months of statements"
+
+# no_std on the guest, std on a host (the `score` tool and the tests). The guest's build copies
+# this crate inside it ($CIRCUITS/example-programs/credit-score/core). No dependencies.
+[dependencies]
+
+[[bin]]
+name = "score"
+path = "src/bin/score.rs"
+
+[workspace]

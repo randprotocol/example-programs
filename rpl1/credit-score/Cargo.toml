@@ -1,0 +1,21 @@
+[package]
+name = "credit-score"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-1 example: a lender's published scoring model run over a borrower's private statements"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/credit-score), where
+# guest-sdk sits two directories up and core/ is copied inside.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+credit-score-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core", "stmt-hash"]
