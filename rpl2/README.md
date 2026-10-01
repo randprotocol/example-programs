@@ -20,6 +20,7 @@ section:
 | [`lending/`](lending/) | a lending market: lenders' RAND for shares, borrowers' collateral token for RAND; an operator's price and a bounded interest index; 75 % to borrow, liquidation over 85 % |
 | [`stablecoin/`](stablecoin/) | a collateralised-debt-position stablecoin: an operator's price, positions owned by secrets, 150 % to borrow, liquidation below 110 % |
 | [`perp/`](perp/) | a perpetual-futures market: oracle price, an LP pool as every trader's counterparty, 10× leverage, a profit cap and a reserve rule that keep the vault solvent |
+| [`stoploss/`](stoploss/) | a conditional order whose trigger price is hidden while it rests (a commitment in the cell, the opening a private input); fires against the operator's oracle, and a false condition leaves no proof at all |
 | [`crowdfund/`](crowdfund/) | all-or-nothing crowdfunding: pledges mint receipts, receipts refund, the creator claims once the goal is met |
 
 ## How an invoke works

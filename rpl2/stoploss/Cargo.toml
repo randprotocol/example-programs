@@ -1,0 +1,21 @@
+[package]
+name = "stoploss"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-2 example: a conditional order whose trigger price is hidden while it rests"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/stoploss), where
+# guest-sdk sits two directories up and the kit is copied beside it.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+stoploss-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core"]

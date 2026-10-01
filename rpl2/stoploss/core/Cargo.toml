@@ -1,0 +1,17 @@
+[package]
+name = "stoploss-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The stoploss example's rules: escrowed RAND released when a public price meets a hidden threshold"
+
+# no_std on the guest, std on a host (the `plan` tool and the tests). The guest's build copies
+# this crate inside it and the kit beside it ($CIRCUITS/example-programs/{stoploss/core,kit}).
+[dependencies]
+rpl2-kit = { path = "../../kit" }
+
+[[bin]]
+name = "plan"
+path = "src/bin/plan.rs"
+
+[workspace]

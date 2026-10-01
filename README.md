@@ -24,6 +24,7 @@ chain.
 | [`rpl2/lending`](rpl2/lending/) | on-chain lending: supply RAND for shares, borrow against a token at 75 % LTV, liquidations | a Rust guest + `plan` tool (tier 14) |
 | [`rpl2/stablecoin`](rpl2/stablecoin/) | a CDP stablecoin: oracle price, 150 % collateral, liquidation under 110 % | a Rust guest + `plan` tool |
 | [`rpl2/perp`](rpl2/perp/) | a perp DEX: oracle-priced, LP pool as counterparty, 10× leverage, liquidations | a Rust guest + `plan` tool (tier 14) |
+| [`rpl2/stoploss`](rpl2/stoploss/) | a stop-loss nobody can hunt: the trigger is a commitment, fired against an oracle cell | a Rust guest + `plan` tool |
 | [`rpl2/crowdfund`](rpl2/crowdfund/) | all-or-nothing crowdfunding with refundable receipt tokens | a Rust guest + `plan` tool |
 
 For a full application on RPL-2, see [durian.market](https://github.com/randprotocol/durian.market),
