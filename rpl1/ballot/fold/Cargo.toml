@@ -1,0 +1,20 @@
+[package]
+name = "fold"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Computes the ballot example's roll digest off chain (never deployed)"
+
+# Built by ../build.sh beside the ballot guest, inside a circuits checkout
+# ($CIRCUITS/example-programs/ballot/fold), three directories below guest-sdk.
+[dependencies]
+guest-sdk = { path = "../../../guest-sdk" }
+ballot-core = { path = "../core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

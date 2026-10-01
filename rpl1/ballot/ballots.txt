@@ -1,0 +1,8 @@
+# The ballots, as the tallier holds them: `<voter_tag> <option>` or `<voter_tag> abstain`; a
+# voter with no line abstains. These are private inputs — a real ballots file stays on the
+# tallier's machine (name it *.secret to keep it out of git). This one is the demo's.
+101 0
+102 1
+103 0
+104 abstain
+# 105 cast no ballot

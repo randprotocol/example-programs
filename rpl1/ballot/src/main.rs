@@ -1,0 +1,54 @@
+//! ballot's zkVM program: a private ballot with a public tally. All of the rules are
+//! `ballot_core::check`; this file only says where the words come from — the option count and the
+//! roll's digest from the public input, the ballots from the private inputs, the hash from the
+//! `POSEIDON2` syscall — and what acceptance and refusal are on this machine.
+//!
+//! An RPL-1 program: stateless, run by `Action::Call`. See `core/src/lib.rs` for the layout.
+#![no_std]
+#![no_main]
+
+use ballot_core::{check, Hash, Source};
+use guest_sdk::{halt, poseidon2, read_input, read_public, write_output};
+
+struct Chain;
+
+impl Hash for Chain {
+    #[inline(always)]
+    fn hash12(&self, msg: [u32; 12]) -> [u32; 8] {
+        let mut buf = msg;
+        poseidon2(buf.as_mut_ptr(), 12);
+        [buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]]
+    }
+}
+
+impl Source for Chain {
+    #[inline(always)]
+    fn public(&self, i: u32) -> u32 {
+        read_public(i)
+    }
+    #[inline(always)]
+    fn input(&self, i: u32) -> u32 {
+        read_input(i)
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn main() -> ! {
+    match check(&Chain) {
+        Ok(out) => {
+            for (j, w) in out.iter().enumerate() {
+                write_output(j as u32, *w);
+            }
+            halt()
+        }
+        Err(_) => refuse(),
+    }
+}
+
+/// A private input index no caller can have committed: the read is unsatisfiable, so the run has
+/// no trace and the call no proof. The loop is only for the type; it is never reached.
+#[inline(never)]
+fn refuse() -> ! {
+    read_input(u32::MAX);
+    loop {}
+}

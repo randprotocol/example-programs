@@ -1,0 +1,16 @@
+[package]
+name = "ballot-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The ballot example's rules: the roll fold and the weighted tally, shared by the guest, the fold helper, the host tool and the tests"
+
+# no_std on the guest, std on a host (the `ballot` tool and the tests). The guest's build copies
+# this crate inside it ($CIRCUITS/example-programs/ballot/core). No dependencies.
+[dependencies]
+
+[[bin]]
+name = "ballot"
+path = "src/bin/ballot.rs"
+
+[workspace]

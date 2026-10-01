@@ -1,0 +1,21 @@
+[package]
+name = "ballot"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-1 example: a private ballot with a public tally over a committed voter roll"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/ballot), where
+# guest-sdk sits two directories up and core/ (the rules) is copied inside.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+ballot-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core", "fold"]

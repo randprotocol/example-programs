@@ -1,0 +1,10 @@
+# The eligible-voter roll, as the organiser publishes it: how many options the ballot has, then
+# one voter per line — a tag (a member number, a key hash truncated to a u32: public, as the
+# roll is) and a weight (shares, tokens, seats; below 2^63, and the weights' sum below 2^63).
+# `./roll.sh roll.txt` folds it into vote.txt, the deploy's public input.
+options 3
+101 500
+102 300
+103 200
+104 150
+105 50
