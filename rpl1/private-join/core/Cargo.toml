@@ -1,0 +1,16 @@
+[package]
+name = "private-join-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The private-join example's rules: two committed, sorted lists; their intersection size or a two-sided match"
+
+# no_std on the guest, std on a host (the `join` tool and the tests). No dependencies. The guest's
+# build copies this crate inside it ($CIRCUITS/example-programs/private-join/core).
+[dependencies]
+
+[[bin]]
+name = "join"
+path = "src/bin/join.rs"
+
+[workspace]

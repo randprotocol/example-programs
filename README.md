@@ -10,6 +10,7 @@ chain.
 | [`rpl1/threshold`](rpl1/threshold/) | prove a private amount is at least a public threshold | a Rust guest, `rand call` |
 | [`rpl1/spl-token`](rpl1/spl-token/) | the Solana SPL Token program, translated to RISC-V and deployed | `sbpf2rv`, `rand program deploy` |
 | [`rpl1/eligibility`](rpl1/eligibility/) | prove a credential in an issuer's Merkle tree meets a predicate, without revealing which | a Rust guest + `issuer` tool, `rand call` |
+| [`rpl1/private-join`](rpl1/private-join/) | private set intersection / two-sided matching over committed lists | a Rust guest + `join` tool, `rand call` |
 | [`rpl1/credit-score`](rpl1/credit-score/) | a published scoring model over private bank statements; the receipt is the band | a Rust guest + `score` tool, `rand call [--auditor]` |
 | [`rpl1/sealed-auction`](rpl1/sealed-auction/) | a Vickrey auction / sealed RFQ over private bids; the receipt binds every bid's commitment | a Rust guest + `auction` tool, `rand call` |
 | [`rpl1/ballot`](rpl1/ballot/) | private ballots over a committed voter roll, a public weighted tally | a Rust guest + `ballot` tool, `rand call` |

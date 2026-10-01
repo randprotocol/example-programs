@@ -1,0 +1,21 @@
+[package]
+name = "private-join-commit"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Computes a private-join list commitment off chain (never deployed)"
+
+# Built by ../build.sh beside the private-join guest, inside a circuits checkout
+# ($CIRCUITS/example-programs/private-join/commit), three directories below guest-sdk, with the
+# rules crate beside it.
+[dependencies]
+guest-sdk = { path = "../../../guest-sdk" }
+private-join-core = { path = "../core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

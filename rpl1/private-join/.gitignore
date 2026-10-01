@@ -1,0 +1,2 @@
+# Per-deploy: the two parties' commitments and the mode (./public.sh). Salts are *.secret, ignored above.
+join.txt

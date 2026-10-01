@@ -1,0 +1,17 @@
+# Institution A: its own id, then its records (hashed customer ids), strictly ascending.
+self 0x52135cb13ccc38b7
+0x098a4df022e3f570
+0x2fcb5832e466e705
+0x302f0ae02661ddfe
+0x44856780e2563e4b
+0x572d2d7e36bf7fec
+0x610f65e67678cc69
+0x90913a1f31064483
+0x941707dc8770f0b6
+0x99635f3e1fc4be40
+0xa1cc719db7052664
+0xad000eac13f329c0
+0xbbb0d683c286c20e
+0xd2edd018cbf9952f
+0xd75df7ee5c1faa9f
+0xe408726b64551fdf

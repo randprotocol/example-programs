@@ -1,0 +1,22 @@
+[package]
+name = "private-join"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-1 example: a private set intersection, or a two-sided match, between two parties' committed lists"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/private-join), where
+# guest-sdk sits two directories up. `core/` (the rules) and `commit/` (the off-chain committer)
+# are copied in with it.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+private-join-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core", "commit"]

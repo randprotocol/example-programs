@@ -1,0 +1,7 @@
+# A list that is not ascending: the program refuses it, whatever it was committed as.
+self 0x52135cb13ccc38b7
+0xad000eac13f329c0
+0x302f0ae02661ddfe
+0x098a4df022e3f570
+0x99635f3e1fc4be40
+0xbbb0d683c286c20e
