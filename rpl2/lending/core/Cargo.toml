@@ -1,0 +1,17 @@
+[package]
+name = "lending-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The lending example's rules: RAND lent for shares, borrowed against a collateral token"
+
+# no_std on the guest, std on a host (the `plan` tool and the tests). The guest's build copies
+# this crate inside it and the kit beside it ($CIRCUITS/example-programs/{lending/core,kit}).
+[dependencies]
+rpl2-kit = { path = "../../kit" }
+
+[[bin]]
+name = "plan"
+path = "src/bin/plan.rs"
+
+[workspace]
