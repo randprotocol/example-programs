@@ -154,8 +154,8 @@ are a shielded note like any other.
 
 Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
 `https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
-past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
-a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on a laptop (an
+M4 Max), the prover keeping about four cores busy on average. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
 the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
 program id `e32f8fad39080079abe5f71ae4cf31db1716406843562adfbc12682095cef243`

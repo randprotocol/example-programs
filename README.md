@@ -62,7 +62,7 @@ matches. The program never computes anything the caller can't see; it checks.
 | a node | a chain with the `program_state` genesis section for RPL-2. The public testnet, **chain 20**, is the default: `https://rpc.randprotocol.org` (its front must pass the RPL-2 read methods, which it does since randprotocol.org `e77ec7a`) |
 | a wallet | `rand --key ~/.rand/wallet.key.json keygen`. Chain 20's faucet mints only to its genesis wallets, so `rand faucet` is refused there (`rand_mint` is not public): ask the operators for test RAND — about 30 RAND runs every example here once |
 | to build guests | a checkout of the circuits repo (`guest-sdk`, `rand-guest`, `sbpf2rv`), Rust **1.98.1** with `riscv32im-unknown-none-elf` and `llvm-tools`; clang **23.1.1** for the SPL example |
-| to prove | about 6 GB of free memory. With a `main`-branch `rand` a tier-14 bundle proof takes ~20 s and a tier-12 call ~6 s on one core of an M4 laptop (the pre-rebase `feat/rpl2` build is 5–6× slower); an RPL-2 invoke, three proofs, lands in under a minute |
+| to prove | about 6 GB of free memory. With a `main`-branch `rand` a tier-14 bundle proof takes ~20 s and a tier-12 call ~6 s on an M4 laptop, the prover keeping about four cores busy (the pre-rebase `feat/rpl2` build is 5–6× slower); an RPL-2 invoke, three proofs, lands in 35–45 s |
 
 ```sh
 rustup toolchain install 1.98.1
@@ -89,8 +89,10 @@ cd rpl2/counter && ./build.sh && ./run.sh && ./deploy.sh && ./invoke.sh && ./sta
 ## Everything here has run on chain 20
 
 On 2026-10-01 every example in this repository was deployed and used on chain 20, the public
-testnet, through `https://rpc.randprotocol.org`, by its own scripts — 17 programs, 7 program-minted
-RPL tokens, 10 calls and 38 invokes, every receipt equal to what `run.sh` predicted on the emulator.
+testnet, through `https://rpc.randprotocol.org`, by its own scripts — 20 programs, 9 RPL tokens (7 of
+them minted only by their program), 11 calls and 41 invokes, every receipt equal to what `run.sh`
+predicted on the emulator; the one exception is the SPL Token translation, which the chain refuses
+to deploy (below).
 Each README's **On chain** section has the program id and every transaction. The same flows ran
 unchanged on a local chain cut with the same genesis flags; the RPL-2 vaults ended at identical
 values on both.
@@ -103,7 +105,8 @@ What running it on chain found, and where it was fixed:
 | durian.market's wallet proxy refused `rand_getRawTransaction`, which every scan needs after a faucet mint, so no external wallet could sync | durian.market `887252d` |
 | a `main`-built wallet refuses chain 1919 (BIND-1: no `binding_domain` in that genesis); chains from 20 on carry one | moot: the devnet is retired for chain 20 |
 | `rand_status` says `faucet: true` on chain 20 but `rand_mint` is not public and the faucet mints only to genesis wallets | docs: how a chain-20 user gets test RAND |
-| proving runs on one core; the `feat/rpl2` build proves 5–6× slower than `main` | run the `main` / v0.6.8 build; multi-core proving is the open item |
+| the `feat/rpl2` build proves 5–6× slower than `main`; `main`'s prover averages ~4 of 16 cores (Plonky3's `parallel` is on, but the serial phases are long) | run the `main` / v0.6.8 build; wider parallelism is the open prover item |
+| the SPL Token translation (65 096 words, 27 151 public words) is refused at deploy on chain 20: "can never be called — a call proves at most 0 program words beside that public input at the highest tier a call may use" (calls cap at tier 14; its instructions need tier 20) | `rpl1/spl-token` runs off chain only until calls may use higher tiers, or the program is split |
 
 ## Two rules every program here keeps
 

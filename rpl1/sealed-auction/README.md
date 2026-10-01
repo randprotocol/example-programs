@@ -185,8 +185,8 @@ line above it is the smallest tier the run fits, and the wallet proves at that o
 
 Deployed and used on **chain 20**, the public testnet, on 2026-10-01, through the published RPC
 `https://rpc.randprotocol.org`, with `rand` built from fullnode `5f872a58` (two deploy-config commits
-past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on one CPU core of
-a laptop. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
+past the v0.6.8 tag), by the scripts above exactly as written. Every proof was made on a laptop (an
+M4 Max), the prover keeping about four cores busy on average. Fees are what the wallet paid; look a transaction up with `rand_getTransaction <hash>`, and
 the cells and the vault as they are today with `rand program state <id>` / `rand program vault <id>`.
 
 program id `72b753e655aca25bafecbcd632f9808b22a913288480c7353098471bbbca3d56`

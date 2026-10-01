@@ -64,5 +64,5 @@ eight call-binding words:
 | then | each pay, then each mint: asset, amount low, amount high |
 
 Limits: at most 8 reads, 8 writes, 4 payouts, and the context must fit 119 words for a program
-with no public input. Creating a cell costs the chain's `cell_fee` (0.01 RAND on the devnet);
+with no public input. Creating a cell costs the chain's `cell_fee` (0.01 RAND on chain 20);
 rewriting or deleting one is free.
