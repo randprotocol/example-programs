@@ -1,0 +1,14 @@
+[package]
+name = "rpl2-kit"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "What every RPL-2 example here shares: the transition context, wide arithmetic, secrets, and (on a host) a transition builder"
+
+# A library both for the zkVM guests (no_std on riscv32) and for each example's host-side `plan`
+# tool and tests (std). No dependencies. The guests' build copies it beside them into the circuits
+# checkout ($CIRCUITS/example-programs/kit).
+[dependencies]
+
+[workspace]
+exclude = ["secret-hash"]

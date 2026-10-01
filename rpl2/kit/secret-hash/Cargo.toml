@@ -1,0 +1,19 @@
+[package]
+name = "secret-hash"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Prints POSEIDON2([tag, s0..s7]) off chain, with the guests' own hash (never deployed)"
+
+# Built by ../build.sh inside a circuits checkout ($CIRCUITS/example-programs/secret-hash), where
+# guest-sdk sits two directories up.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]

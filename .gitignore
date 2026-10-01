@@ -6,3 +6,12 @@ lock.txt
 *.key.json
 *.notes.json
 authority.key.json
+# The RPL-2 DeFi examples: secrets (mode 600) and each deploy's public input.
+*.secret
+public.txt
+token.txt
+# Host builds of the RPL-2 examples (path dependencies only).
+Cargo.lock
+# Build outputs of the RPL-2 examples (./build.sh makes them).
+rpl2/**/image.bin
+rpl2/**/image.bin.sha256

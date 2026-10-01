@@ -13,9 +13,23 @@ chain.
 | [`rpl2/`](rpl2/) | **RPL-2**: programs with state and a vault | `Invoke` |
 | [`rpl2/counter`](rpl2/counter/) | one cell, incremented by one per invoke | a Rust guest, `rand program invoke` |
 | [`rpl2/vault`](rpl2/vault/) | anyone pays RAND in; only whoever knows a secret pays it out | a Rust guest, `rand program invoke` |
+| [`rpl2/kit`](rpl2/kit/) | the library the DeFi examples share: context, 256-bit math, secrets, a host-side transition builder | a Rust crate (guest and host) |
+| [`rpl2/amm`](rpl2/amm/) | a constant-product AMM for RAND and one token, with liquidity shares | a Rust guest + `plan` tool, `rand program invoke` |
+| [`rpl2/stableswap`](rpl2/stableswap/) | a Curve-style StableSwap pool; the invariant is declared and checked, not computed | a Rust guest + `plan` tool |
+| [`rpl2/orderbook`](rpl2/orderbook/) | escrowed limit orders with partial fills and ticket secrets | a Rust guest + `plan` tool |
+| [`rpl2/stablecoin`](rpl2/stablecoin/) | a CDP stablecoin: oracle price, 150 % collateral, liquidation under 110 % | a Rust guest + `plan` tool |
+| [`rpl2/crowdfund`](rpl2/crowdfund/) | all-or-nothing crowdfunding with refundable receipt tokens | a Rust guest + `plan` tool |
 
 For a full application on RPL-2, see [durian.market](https://github.com/randprotocol/durian.market),
 a constant-product AMM.
+
+The DeFi examples (`rpl2/amm` onwards) share one layout: `core/src/lib.rs` holds the rules as a
+`check(source) → accept | refuse` function that runs unchanged on the zkVM and on your machine;
+`core/src/plan.rs` is the wallet's side, finding the best amounts by bisection over the very
+inequalities the program checks; `core/tests/rules.rs` accepts the best amount, refuses one unit
+more, and flips every context word of every accepted transition to show none is left unchecked;
+`run.sh` runs every method on the emulator, accepted and refused, and checks the guest agrees
+with the host rules. See [`rpl2/amm`](rpl2/amm/) for the walk-through.
 
 ## RPL-1 and RPL-2 in one paragraph each
 

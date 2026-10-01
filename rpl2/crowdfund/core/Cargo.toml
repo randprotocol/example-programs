@@ -1,0 +1,17 @@
+[package]
+name = "crowdfund-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The crowdfund example's rules: one all-or-nothing campaign, pledges in RAND, receipts as its own token"
+
+# no_std on the guest, std on a host (the `plan` tool and the tests). The guest's build copies
+# this crate inside it and the kit beside it ($CIRCUITS/example-programs/{crowdfund/core,kit}).
+[dependencies]
+rpl2-kit = { path = "../../kit" }
+
+[[bin]]
+name = "plan"
+path = "src/bin/plan.rs"
+
+[workspace]

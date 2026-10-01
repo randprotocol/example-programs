@@ -1,0 +1,21 @@
+[package]
+name = "stablecoin"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-2 example: a collateralised-debt-position stablecoin backed by RAND"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/stablecoin), where guest-sdk
+# sits two directories up and the kit is copied beside it.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+stablecoin-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core"]

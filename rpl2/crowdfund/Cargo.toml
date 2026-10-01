@@ -1,0 +1,21 @@
+[package]
+name = "crowdfund"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "RPL-2 example: an all-or-nothing crowdfunding campaign with refundable pledges"
+
+# Built by ./build.sh inside a circuits checkout ($CIRCUITS/example-programs/crowdfund), where guest-sdk
+# sits two directories up and the kit is copied beside it.
+[dependencies]
+guest-sdk = { path = "../../guest-sdk" }
+crowdfund-core = { path = "core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[workspace]
+exclude = ["core"]

@@ -1,0 +1,17 @@
+[package]
+name = "stablecoin-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-only"
+description = "The stablecoin example's rules: RAND-backed debt positions minting the program's own stable token"
+
+# no_std on the guest, std on a host (the `plan` tool and the tests). The guest's build copies
+# this crate inside it and the kit beside it ($CIRCUITS/example-programs/{stablecoin/core,kit}).
+[dependencies]
+rpl2-kit = { path = "../../kit" }
+
+[[bin]]
+name = "plan"
+path = "src/bin/plan.rs"
+
+[workspace]

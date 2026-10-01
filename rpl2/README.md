@@ -13,6 +13,12 @@ section:
 |---|---|
 | [`counter/`](counter/) | one cell; a declared read and write; checking every context word; a stale read and the retry |
 | [`vault/`](vault/) | a vault: deposits in, payouts out; a deploy-time public input (a lock) in the program id; a secret proved without being revealed; Poseidon2 inside a guest |
+| [`kit/`](kit/) | what the DeFi examples below share: the context reader, 256-bit products, secrets as owners and operators, the host-side transition builder and the "flip every word" test |
+| [`amm/`](amm/) | a constant-product pool of RAND and one token; shares the program alone mints; verify-don't-compute with a wallet that bisects the same inequality |
+| [`stableswap/`](stableswap/) | Curve's StableSwap invariant for RAND and a pegged token; the invariant `D` is declared by the caller and checked exact, never computed |
+| [`orderbook/`](orderbook/) | escrowed limit orders with partial fills; a ticket secret owns each order; why a taker's payment waits in the cell for the maker |
+| [`stablecoin/`](stablecoin/) | a collateralised-debt-position stablecoin: an operator's price, positions owned by secrets, 150 % to borrow, liquidation below 110 % |
+| [`crowdfund/`](crowdfund/) | all-or-nothing crowdfunding: pledges mint receipts, receipts refund, the creator claims once the goal is met |
 
 ## How an invoke works
 
