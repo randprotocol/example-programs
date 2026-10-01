@@ -74,6 +74,44 @@ withdraw 2 RAND, wrong secret:
 trap: InputIndex(4294967295)
 ```
 
-The image is 199 words with the hash inside; both methods prove at tier 10.
+The image is 305 words with the Poseidon2 call inside (`lock-hash` is 199); both methods prove at tier 10.
 
 ## On chain
+
+The images `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
+for byte with the pinned toolchain):
+
+| | vault | lock-hash |
+|---|---|---|
+| `image.bin` sha256 | `751dc1743988eeb7bc8696af6a60d35bec9ec5c167e280c3b9b66729a8f3a740` | — |
+| `hc` (`rand-guest`) | `77c0215ea0055668bba46648275965f57a5209f44eacdb6a2949e65d5f912dd6` | `5264de0edea976386a113726d7df9bfc00b4f3da2808b5c0a240e223184388bd` |
+| program id, code only | `8a6b5a6d8a9c8f0d7bcc3db36457467f1a522040ee10f68f3af8ef489c00389b` | (never deployed) |
+
+The deployed id also binds the lock, so every `lock.sh` gives a different program and vault; the
+run below is one of them.
+
+
+Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01, from a
+wallet holding 99.93 RAND:
+
+```
+$ ./deploy.sh
+program id: 08c2ccb5db4d4fd18b13e466c7704e3c6ecbfb024f22b6ba4b5ffd4a1fbba551 (305 words, …, public input 8 words, …)
+submitted deploy ba445593f9807fe89727551c0234c710248a0eb500ed70f66993e46058af1f72   fee 0.0323 RAND
+
+$ ./deposit.sh 5
+proved in 28.5s: tier 10, 1383183 bytes, outputs [1, 705032704, 1, 0, 0, 0, 0, 0]
+submitted invoke a0c5b644de97063f6b83c256d7e7976ac11af58c578de145e67f108aa8267efc
+  0 RAND out, 5 RAND burned, 94.9271664 RAND change, fee 0.0043024 RAND, …
+$ ./show.sh
+"vault": [{ "amount": "5000000000", "asset": 0 }]
+
+$ ./withdraw.sh 2
+proved in 24.2s: tier 10, 1388302 bytes, outputs [2, 2000000000, 0, 0, 0, 0, 0, 0]
+submitted invoke 9f2ab01a6f4f6309d6de88b1d684a66b8144e099e2a65162ccc2eab4f2dbb8bf
+  0 RAND out, 94.9228384 RAND change, fee 0.004328 RAND, …
+$ ./show.sh
+"vault": [{ "amount": "3000000000", "asset": 0 }]
+$ rand balance
+balance: 96.9228384 RAND          94.92 change + the 2 RAND payout, a new note
+```

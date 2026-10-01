@@ -62,3 +62,37 @@ program on chain was deployed with a different threshold. The threshold is part 
 redeploying gives a new program.
 
 ## On chain
+
+The image `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
+for byte with the pinned toolchain):
+
+| | |
+|---|---|
+| `image.bin` sha256 | `f07e53a9878da70e1c1e4e46e57b1f48f336993fecd75765814b970cb229abaf` |
+| `hc` (`rand-guest`) | `5f74e137f4cb75e8723853f50060c225d2854bb1f6ba8e8e3f6b1902285ffd7e` |
+| program id, code only | `6b5ccea3633cd11f71a8f59b6a517311861b0dc3f02a6d8c3db22cd8616c0dfd` |
+| program id deployed with `threshold.txt` = `1000 0` | `71f6c2e0d1772cdcfeba767ceca2939761d7feda0b7bed96dc366096a5aaa541` |
+
+
+Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01, from a
+fresh faucet wallet, with the scripts above:
+
+```
+$ ./deploy.sh
+program id: 71f6c2e0d1772cdcfeba767ceca2939761d7feda0b7bed96dc366096a5aaa541 (51 words, …, public input 2 words, …)
+authorisation proved in 22.7s: tier 10, 1375787 bytes
+proved in 383.4s: tier 14, 1494600 bytes
+submitted deploy 7cbb286e16fc8fccec7043555dccfed44d7d93c29bb61465f8a505ad7672c7fe
+  0 RAND out, 99.9937 RAND change, fee 0.0063 RAND, …
+
+$ ./call.sh 2500
+fee 0.0043032 RAND
+proved in 26.0s: tier 10, 1372333 bytes, outputs [1, 1000, 0, 0, 0, 0, 0, 0]
+authorisation proved in 25.0s: tier 10, 1367819 bytes
+proved in 378.4s: tier 14, 1495688 bytes
+submitted call 3ef1d975b4cb87967892c18768983bad9e5f7c78bddd1e38bd9e71c83f7160e4
+{ "height": 2759, "outputs": [1, 1000, 0, 0, 0, 0, 0, 0], "tier": 10, … }
+```
+
+The call proof (tier 10) took 26 s; most of the wall time is the bundle that pays the fee
+(tier 14, ~6 minutes on a 4-vCPU cloud machine, single-threaded).

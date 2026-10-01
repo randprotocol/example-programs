@@ -77,3 +77,38 @@ The first invoke **creates** the cell, so it pays the chain's `cell_fee` on top 
 (0.01 RAND on the devnet); later ones rewrite it for free.
 
 ## On chain
+
+The image `build.sh` produces (built images are not committed; `build.sh` reproduces them byte
+for byte with the pinned toolchain):
+
+| | |
+|---|---|
+| `image.bin` sha256 | `2f18dd0aa6721fe1ede253eecde832f7361c647f8664c83e8bdceaf218d7e9f7` |
+| `hc` (`rand-guest`) | `abf12528c2e7d8b4f98df55f448a11f3fa8c8646d38e37640bafaf97c8ace481` |
+| program id (no public input, so the deployed id is the same) | `b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec` |
+
+Anyone who builds this source gets **the same program id**. On the durian devnet it is already
+deployed, so you can skip `deploy.sh` there: `echo b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec > program.id`
+and run `./invoke.sh` — it increments the same public counter everyone shares.
+
+
+Run on the durian devnet (chain 1919, fullnode v0.6.8, production FRI) on 2026-10-01:
+
+```
+$ ./deploy.sh
+program id: b1440b21ab4e91560474d7239c980af26f46e759dcfb8a459ae72f0d4e4d31ec (103 words, …)
+submitted deploy 7fcf9c27d10d01eec317e3e1eee7f933ae98db91751394bb056300e98e6d4326
+  0 RAND out, …, fee 0.0113 RAND, …
+
+$ ./invoke.sh
+cell 1 holds 0; declaring 0 → 1
+fee 0.014328 RAND (1 cell created at 0.01 RAND each)
+proved in 23.6s: tier 10, 1366314 bytes, outputs [1, 0, 0, 0, 0, 0, 0, 0]
+authorisation proved in 25.0s: tier 10, 1364522 bytes
+proved in 372.0s: tier 14, 1497479 bytes
+submitted invoke b7d7e0c721379d2d46512577364d0e32b602557bed5ee9138c929c2e922ea651
+
+$ ./state.sh
+"cells": [{ "key": "0100000000000000000000000000000000000000000000000000000000000000",
+            "value": "0100000000000000000000000000000000000000000000000000000000000000" }]
+```
